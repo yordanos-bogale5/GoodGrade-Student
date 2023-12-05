@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "606035065133",
+    "project_id": "my-creavers-project-9ae09",
+    "storage_bucket": "my-creavers-project-9ae09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606035065133:android:08d217ebd6ca1a743cbba4",
+        "android_client_info": {
+          "package_name": "com.example.creavers_project4"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa7OLOLsmjPsuphbwnebgbhl6yAcVFYZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
