@@ -60,6 +60,7 @@ dependencies:
   google_sign_in: ^6.1.6
   firebase_database: ^10.3.5
   syncfusion_flutter_pdfviewer: ^23.2.6
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +93,7 @@ flutter:
     - assets/maths.jpg
     - assets/calcules.jpg
     - assets/staff.jpg
+    - assets/google-logo-hd.png
     - assets/teacher.jpg
     - assets/good.jpg
     - assets/biology.webp

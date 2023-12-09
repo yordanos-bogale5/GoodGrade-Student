@@ -18,8 +18,20 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: const Text('Chat '),
+            backgroundColor:Colors.blue[900],
+            foregroundColor:Colors.white,
+            elevation: 0,
+            leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color:Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+          ),
       backgroundColor: kWhiteColor,
-     
+   
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

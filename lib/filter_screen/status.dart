@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const StatusButton());
+void main() => runApp(const statusList());
 
 const List<String> list = <String>[
 'Status',
@@ -21,21 +21,21 @@ class Status extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: StatusButton(),
+          child: statusList(),
         ),
       ),
     );
   }
 }
 
-class StatusButton extends StatefulWidget {
-  const StatusButton ({super.key});
+class statusList extends StatefulWidget {
+  const statusList ({super.key});
 
   @override
-  State<StatusButton> createState() => _StatusButtonState();
+  State<statusList> createState() => _statusListState();
 }
 
-class _StatusButtonState extends State<StatusButton> {
+class _statusListState extends State<statusList> {
   String dropdownValue = list.first;
 
   @override

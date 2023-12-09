@@ -1,10 +1,11 @@
 
 import 'package:flutter/material.dart';
 
-import '../../common_widget/round_button.dart';
 
 import '../common/color_extenstion.dart';
-import '../common_widget/round_text_field.dart';
+import '../common/common_widget/round_button.dart';
+import '../common/common_widget/round_text_field.dart';
+
 
 class ForgotPasswordView extends StatefulWidget {
   const ForgotPasswordView({super.key});

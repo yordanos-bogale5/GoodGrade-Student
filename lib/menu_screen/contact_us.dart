@@ -77,7 +77,7 @@ class _ContactUsState extends State<ContactUs> {
                   controller: toMailController,
                   decoration: const InputDecoration(
                     hintText: 'Please Enter To Mail Address',
-                    labelText: 'To Mail',
+                    labelText: 'To Mail...',
                   ),
                 ),
                 TextFormField(

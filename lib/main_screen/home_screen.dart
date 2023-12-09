@@ -1,5 +1,3 @@
-
-
 import 'package:creavers_project/view/wish_list.dart';
 import 'package:flutter/material.dart';
 
@@ -7,12 +5,8 @@ import 'package:creavers_project/main_screen/teacher_month.dart';
 import 'package:creavers_project/search/search_view.dart';
 import 'package:creavers_project/view/account/account.dart';
 
-
-
-
 import 'package:creavers_project/widgets/card_widget.dart';
 import 'package:creavers_project/library_screen/shop_screen.dart';
-
 
 import 'package:creavers_project/authentication_screen/log_in.dart';
 
@@ -20,14 +14,16 @@ import 'package:creavers_project/menu_screen/about_page/about_us.dart';
 
 import 'package:creavers_project/Settings/setting.dart';
 import 'package:creavers_project/main_screen/course_detail.dart';
-
-
+import 'package:shimmer/shimmer.dart';
 
 import '../adimin_dashboard/dashboard.dart';
+import '../common/color_extenstion.dart';
 import '../courses/course_dashbord.dart';
 
 import '../instructor_dashboard/inst_dash.dart';
+import '../menu_screen/contact_us.dart';
 import '../notification/noti_view/noti_view.dart';
+import '../view/cart.dart';
 import 'chat.dart';
 
 // ignore: must_be_immutable
@@ -43,7 +39,9 @@ class _HomePageState extends State<HomePage> {
 
   int selectedTab = 0;
 
+  bool isDarkMode = false;
 
+bool isLoading = true;
 
   List<String> imgList = [
     'assets/Digital signal processing.webp',
@@ -79,48 +77,75 @@ class _HomePageState extends State<HomePage> {
   ];
 
   void onTabTapped(int index) {
-  setState(() {
-    selectedTab = index;
-  });
+    setState(() {
+      selectedTab = index;
+    });
 
-  switch (index) {
-    case 0: // Account
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AccountView()),
-      );
-      break;
-    case 1: // Search
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const SearchView()),
-      );
-      break;
-    case 2: // Learn
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CourseDashboard ()),
-      );
-      break;
-    case 3: // Wishlist
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const WishlistView ()),
-      );
-      break;
-    case 4: // Cart
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) =>   const Chat(key:Key('chat'),)),
-      );
-      break;
+    switch (index) {
+      case 0: // Account
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const AccountView()),
+        );
+        break;
+      case 1: // Search
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SearchView()),
+        );
+        break;
+      case 2: // Learn
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CourseDashboard()),
+        );
+        break;
+      case 3: // Wishlist
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const WishlistView()),
+        );
+        break;
+      case 4: // Cart
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const Chat(
+                    key: Key('chat'),
+                  )),
+        );
+        break;
+    }
   }
-}
 
+// Define light theme
+  final ThemeData lightTheme = ThemeData(
+    primaryColor: Colors.white,
+    // ... other light theme properties
+  );
+
+// Define dark theme
+  final ThemeData darkTheme = ThemeData.dark().copyWith(
+    primaryColor: Colors.black,
+    // ... other dark theme properties
+  );
+  bool isDark = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Simulate data loading delay (you should replace this with actual data fetching logic)
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: isDark ? Colors.black : Colors.white,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         selectedItemColor: Colors.blue[900],
@@ -150,12 +175,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-
-  appBar: AppBar(
-            iconTheme: const IconThemeData(color: Colors.white),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         shadowColor: Colors.transparent,
         title: const Text(
           "Good Grade Student",
+          
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.w600,
@@ -165,14 +190,16 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 6, 51, 119),
+        backgroundColor: Colors.blue[900],
         actions: <Widget>[
           IconButton(
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NotificationScreen(userId: '',),
+                  builder: (context) => const NotificationScreen(
+                    userId: '',
+                  ),
                 ),
               );
             },
@@ -184,11 +211,35 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: Drawer(
-        backgroundColor:Colors.white,
+        backgroundColor: Colors.white,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            Image.asset('assets/good.jpg'),
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue[900], // Customize the drawer header color
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset('assets/good.jpg', height: 60),
+                  const SizedBox(height: 10),
+                  // Add Switch for mode change
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12, left: 218.0),
+                    child: Switch(
+                      activeColor: TColor.primary,
+                      value: isDark,
+                      onChanged: (value) {
+                        setState(() {
+                          isDark = value;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text('Home'),
@@ -199,7 +250,6 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-         
             ListTile(
               leading: const Icon(Icons.book),
               title: const Text('Library'),
@@ -210,14 +260,34 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
+             ListTile(
+              leading: const Icon(Icons.shopping_cart),
+              title: const Text('Cart'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CartView()),
+                );
+              },
+            ),
             const Divider(),
+              ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Setting'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Setting()),
+                );
+              },
+            ),
             ListTile(
               leading: const Icon(Icons.email),
               title: const Text('Contact Us'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AdminDashboard ()),
+                  MaterialPageRoute(builder: (context) => const ContactUs()),
                 );
               },
             ),
@@ -231,17 +301,7 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Setting'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Setting()),
-                );
-              },
-            ),
+              const Divider(),
             ListTile(
               leading: const Icon(Icons.account_circle),
               title: const Text('Log In'),
@@ -253,27 +313,28 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             const Divider(),
-             ListTile(
+            ListTile(
               leading: const Icon(Icons.account_circle),
               title: const Text('inst dashboard'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const InstDashboard()),
+                  MaterialPageRoute(
+                      builder: (context) => const InstDashboard()),
                 );
               },
             ),
-             ListTile(
+            ListTile(
               leading: const Icon(Icons.account_circle),
               title: const Text('admin dashboard'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AdminDashboard()),
+                  MaterialPageRoute(
+                      builder: (context) => const AdminDashboard()),
                 );
               },
             ),
-
           ],
         ),
       ),
@@ -300,50 +361,94 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       "TOP COURSES",
                       style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 22,
+                  color: Color(0xFF808080),
+                  ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
-                GridView.builder(
-                  itemCount: courseList.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    childAspectRatio: 1,
-                  ),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailHomeScreen(
-                              imagePath: imgList[index],
-                              courseName: courseList[index],
-                              instructorName: instList[index],
-                              coursePrice:
-                                  '\$99',
-                              teacher:
-                                  '',
-                              category: '',
-                            ),
+                if (isLoading)
+                  Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: GridView.builder(
+                      itemCount: courseList.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        childAspectRatio: 1,
+                      ),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailHomeScreen(
+                                  imagePath: imgList[index],
+                                  courseName: courseList[index],
+                                  instructorName: instList[index],
+                                  coursePrice: '\$99',
+                                  teacher: '',
+                                  category: '',
+                                ),
+                              ),
+                            );
+                          },
+                          child: CoursePage(
+                            title: courseList[index],
+                            instructor: instList[index],
+                            price: "6.5",
+                            rating: 4,
+                            image: imgList[index],
+                            color: Colors.white,
                           ),
                         );
                       },
-                      child: CoursePage(
-                        title: courseList[index],
-                        instructor: instList[index],
-                        price: "6.5",
-                        rating: 4,
-                        image: imgList[index], color: Colors.white,
-                      ),
-                    );
-                  },
-                ),
+                    ),
+                  )
+                else
+                  GridView.builder(
+                    itemCount: courseList.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      childAspectRatio: 1,
+                    ),
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailHomeScreen(
+                                imagePath: imgList[index],
+                                courseName: courseList[index],
+                                instructorName: instList[index],
+                                coursePrice: '\$99',
+                                teacher: '',
+                                category: '',
+                              ),
+                            ),
+                          );
+                        },
+                        child: CoursePage(
+                          title: courseList[index],
+                          instructor: instList[index],
+                          price: "6.5",
+                          rating: 4,
+                          image: imgList[index],
+                          color: Colors.white,
+                        ),
+                      );
+                    },
+                  ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: ElevatedButton.icon(
@@ -554,7 +659,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-
                           Card(
                             elevation: 3,
                             shape: RoundedRectangleBorder(
@@ -593,7 +697,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-
                           Card(
                             elevation: 3,
                             shape: RoundedRectangleBorder(
@@ -632,7 +735,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-
                           Card(
                             elevation: 3,
                             shape: RoundedRectangleBorder(
@@ -671,7 +773,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-
                           Card(
                             elevation: 3,
                             shape: RoundedRectangleBorder(
@@ -710,8 +811,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-
-                          
                         ],
                       ),
                     ),
@@ -724,9 +823,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  }
-
-
+}
 
 class MyNavBar extends StatelessWidget {
   const MyNavBar({super.key});
@@ -754,7 +851,8 @@ class MyNavBar extends StatelessWidget {
       ),
     );
   }
-  }
+}
+
 void main() {
   runApp(const MaterialApp(
     home: HomePage(),

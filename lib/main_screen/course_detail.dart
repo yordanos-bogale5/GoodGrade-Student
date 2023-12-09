@@ -57,7 +57,7 @@ class _DetailHomeScreenState extends State<DetailHomeScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => LoginScreen()),
+              builder: (context) => const LoginScreen()),
         );
         break;
       case 1: // Search
@@ -92,8 +92,17 @@ class _DetailHomeScreenState extends State<DetailHomeScreen> {
         ],
       ),
       appBar: AppBar(
-        title: const Text('Course Details'),
-      ),
+          title: const Text('Course Details'),
+            backgroundColor:Colors.blue[900],
+            foregroundColor:Colors.white,
+            elevation: 0,
+            leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color:Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+          ),
       body: SingleChildScrollView(
         child: Column(
           children: [

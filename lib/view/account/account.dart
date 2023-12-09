@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../common/color_extenstion.dart';
-import '../../common_widget/your_review_row.dart';
+import '../../common/common_widget/your_review_row.dart';
+
 
 class AccountView extends StatefulWidget {
   const AccountView({super.key});
@@ -62,12 +63,14 @@ class _AccountViewState extends State<AccountView> {
                         Text(
                           "Selam Tesfaye",
                           style: TextStyle(
-                              color: TColor.text,
+                          color: Colors.blue[900],
                               fontSize: 20,
                               fontWeight: FontWeight.w700),
                         ),
+                        const SizedBox(height: 10,),
                         Text(
-                          "Constantly travelling and keeping up to date with business related books.",
+                          "Constantly travelling and keeping up to date with business related books."
+                         "am starting learninng in good grade students " ,
                           style:
                               TextStyle(color: TColor.subTitle, fontSize: 13),
                         )
@@ -76,13 +79,14 @@ class _AccountViewState extends State<AccountView> {
                   ),
                   const SizedBox(
                     width: 8,
+                    height: 10,
                   ),
                   ClipRRect(
-                      borderRadius: BorderRadius.circular(35),
+                      borderRadius: BorderRadius.circular(5),
                       child: Image.asset(
                         "assets/wellcome.jpg",
-                        width: 70,
-                        height: 70,
+                        width: 150,
+                        height: 150,
                       )),
                   const SizedBox(
                     width: 15,
@@ -143,10 +147,10 @@ class _AccountViewState extends State<AccountView> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "21",
                         style: TextStyle(
-                            color: TColor.subTitle,
+                          color:Colors.lightGreen,
                             fontSize: 30,
                             fontWeight: FontWeight.w700),
                       ),
@@ -165,10 +169,10 @@ class _AccountViewState extends State<AccountView> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "5",
                         style: TextStyle(
-                            color: TColor.subTitle,
+                            color:Colors.lightGreen,
                             fontSize: 30,
                             fontWeight: FontWeight.w700),
                       ),
@@ -187,9 +191,9 @@ class _AccountViewState extends State<AccountView> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
               child: Text(
-                "Your purchases (21)",
+                "Your Courses (3)",
                 style: TextStyle(
-                    color: TColor.subTitle,
+                    color: Colors.blue[900],
                     fontSize: 20,
                     fontWeight: FontWeight.w700),
               ),
@@ -197,16 +201,6 @@ class _AccountViewState extends State<AccountView> {
             Stack(
               alignment: Alignment.centerLeft,
               children: [
-                Container(
-                  height: media.width * 0.4,
-                  width: media.width * 0.45,
-                  decoration: const BoxDecoration(
-                      color: Color(0xffFF5957),
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20))),
-                )
-                ,
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -215,16 +209,13 @@ class _AccountViewState extends State<AccountView> {
                       var isLast = purArr.last == iName;
                       return Container(
                         margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 12),
-                        
-                       
                         padding: isFirst
-                            ? const EdgeInsets.only(left: 25)
+                            ? const EdgeInsets.only(left: 5)
                             : (isLast
-                                ? const EdgeInsets.only(right: 25)
+                                ? const EdgeInsets.only(right: 5)
                                 : null),
                         child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 2),
-                        
                         decoration:  BoxDecoration(
                             borderRadius:  BorderRadius.circular(15),
                             boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 2, offset: Offset(0, 1))]
@@ -248,7 +239,7 @@ class _AccountViewState extends State<AccountView> {
               child: Text(
                 "Your reviews (7)",
                 style: TextStyle(
-                    color: TColor.subTitle,
+                    color: Colors.blue[900],
                     fontSize: 20,
                     fontWeight: FontWeight.w700),
               ),

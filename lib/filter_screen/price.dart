@@ -1,40 +1,40 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const PriceButton());
+void main() => runApp(const LevelButton());
 
 const List<String> list = <String>[
-'Price',
-'Free Courses',
-'Paid Courses',
-'Only Subscription',
+'level',
+'Beginner',
+'Intermediate',
+'Advance',
 
 ];
 
 
 
-class Price extends StatelessWidget {
-  const Price({super.key});
+class Level extends StatelessWidget {
+  const Level({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: PriceButton(),
+          child: LevelButton(),
         ),
       ),
     );
   }
 }
 
-class PriceButton extends StatefulWidget {
-  const PriceButton ({super.key});
+class LevelButton extends StatefulWidget {
+  const LevelButton ({super.key});
 
   @override
-  State<PriceButton> createState() => _PriceButtonState();
+  State<LevelButton> createState() => _LevelButtonState();
 }
 
-class _PriceButtonState extends State<PriceButton> {
+class _LevelButtonState extends State<LevelButton> {
   String dropdownValue = list.first;
 
   @override
@@ -43,10 +43,10 @@ class _PriceButtonState extends State<PriceButton> {
       value: dropdownValue,
       icon: const Icon(Icons.arrow_downward),
       elevation: 16,
-      style: const TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.deepPurple),
       underline: Container(
         height: 2,
-        color: Colors.white,
+        color: Colors.deepPurpleAccent,
       ),
       onChanged: (String? value) {
         setState(() {

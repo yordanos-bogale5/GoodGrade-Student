@@ -1,9 +1,11 @@
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class AddInstr extends StatefulWidget {
-  const AddInstr({Key? key}) : super(key: key);
+  const AddInstr({Key? key});
 
   @override
   _AddInstrState createState() => _AddInstrState();
@@ -11,34 +13,43 @@ class AddInstr extends StatefulWidget {
 
 class _AddInstrState extends State<AddInstr> {
   List<Map<String, String>> instructors = [];
-  String selectedRole = ''; // Track the selected role for the dropdown
+  late String instructorName;
+  late String fatherName;
+  late String email;
+  late String address;
+  late String password;
+  late String salary;
+  late String role;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Account Creation'),
+        title: const Text('Add Instructors'),
       ),
       body: Column(
         children: [
           ElevatedButton(
             onPressed: () {
-              // Open a dialog to add a new instructor
-              _showAddInstructorDialog(context);
+              // Open a dialog to add a new course
+              _showAddInstrDialog(context);
             },
-            child: const Text('Add Instructor'),
+            child: const Text('Add Instructors'),
           ),
           Expanded(
             child: ListView.builder(
               itemCount: instructors.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text('Instructor ${index + 1}'),
+                  title: Text('Instructors ${index + 1}'),
                   subtitle: Text(
-                    'Email: ${instructors[index]['email']} | '
-                    'Address: ${instructors[index]['address']} |  '
-                    'Salary: ${instructors[index]['salary']} | '
-                    'Role: ${instructors[index]['role']}',
+                    'Instructor Name: ${instructors[index]['Instructor name']} | '
+                        'Father Name: ${instructors[index]['father name']} | '
+                        'Email: ${instructors[index]['email']} | '
+                        'Password: ${instructors[index]['password']} | '
+                        'Address: ${instructors[index]['address']} |  '
+                        'Salary: ${instructors[index]['salary']} | '
+                        'Role: ${instructors[index]['role']}',
                   ),
                 );
               },
@@ -49,62 +60,59 @@ class _AddInstrState extends State<AddInstr> {
     );
   }
 
-  void _showAddInstructorDialog(BuildContext context) {
-    String name = '';
-    String email = '';
-    String address = '';
-    String salary = '';
-
+  void _showAddInstrDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Add Instructor'),
-          content: Column(
-            children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'Name'),
-                onChanged: (value) {
-                  name = value;
-                },
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Email'),
-                onChanged: (value) {
-                  email = value;
-                },
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Address'),
-                onChanged: (value) {
-                  address = value;
-                },
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Salary'),
-                onChanged: (value) {
-                  salary = value;
-                },
-              ),
-              DropdownButton<String>(
-                value: selectedRole,
-                icon: const Icon(Icons.arrow_drop_down),
-                iconSize: 24,
-                elevation: 16,
-                style: TextStyle(color: Colors.black),
-                underline: Container(
-                  height: 2,
-                  color: Colors.deepPurpleAccent,
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Instructor Name'),
+                  onChanged: (value) {
+                    instructorName = value;
+                  },
                 ),
-             
-                items: ['Admin', 'User', 'Guest'].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(), onChanged: (String? value) {  },
-              ),
-            ],
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Father Name'),
+                  onChanged: (value) {
+                    fatherName = value;
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Email'),
+                  onChanged: (value) {
+                    email = value;
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Address'),
+                  onChanged: (value) {
+                    address = value;
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Password'),
+                  onChanged: (value) {
+                    password = value;
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Salary'),
+                  onChanged: (value) {
+                    salary = value;
+                  },
+                ),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Role'),
+                  onChanged: (value) {
+                    role = value;
+                  },
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -114,35 +122,39 @@ class _AddInstrState extends State<AddInstr> {
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () async {
+              onPressed: () {
                 // Add the instructor to the list
                 setState(() {
                   instructors.add({
-                    'name': name,
+                    'Instructor name': instructorName,
+                    'father name': fatherName,
                     'email': email,
                     'address': address,
+                    'password': password,
                     'salary': salary,
-                    'role': selectedRole,
+                    'role': role,
                   });
                 });
 
+                // Send data to the server
                 final url = Uri.https(
                   'my-creavers-project-9ae09-default-rtdb.firebaseio.com',
-                  'Add-Instructor.json',
+                  'instructors.json',
                 );
-
-                await http.post(
+                http.post(
                   url,
-                  headers: {'Content-Type': 'application/json'},
-                  body: json.encode(
-                    {
-                      'name': name,
-                      'email': email,
-                      'address': address,
-                      'salary': salary,
-                      'role': selectedRole,
-                    },
-                  ),
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: json.encode({
+                    'Instructor name': instructorName,
+                    'father name': fatherName,
+                    'email': email,
+                    'address': address,
+                    'password': password,
+                    'salary': salary,
+                    'role': role,
+                  }),
                 );
 
                 Navigator.pop(context);

@@ -2,10 +2,11 @@
 
 import 'package:flutter/material.dart';
 
+import 'crud_ops/ops.dart';
 import 'dashboard_screens/assignmentt.dart';
-import 'dashboard_screens/quiz_mgt.dart';
+
 import 'dashboard_screens/course_mgt.dart';
-import 'dashboard_screens/report.dart';
+
 import 'dashboard_screens/support.dart';
 import 'dashboard_screens/user.mgt.dart';
 
@@ -47,12 +48,12 @@ class AdminDashboard extends StatelessWidget {
             itemCount: 6,
             itemBuilder: (BuildContext context, int index) {
               List<String> texts = [
-                'User Management',
-                'Course Management',
+                'Instructors',
+                'Students',
+                'Courses',
                 'Quiz',
                 'Assignment',
-                'Support & Helpdesk',
-                'Reports',
+                'Answers',
               ];
 
               return InkWell(
@@ -65,7 +66,7 @@ class AdminDashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const UserMgt(),
+                          builder: (context) =>  const InstCrudOps(),
                         ),
                       );
                       break;
@@ -81,7 +82,7 @@ class AdminDashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ContentMgt(),
+                          builder: (context) => const InstCrudOps(),
                         ),
                       );
                       break;
@@ -105,7 +106,7 @@ class AdminDashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ReportMgt(),
+                          builder: (context) => const UserMgt(),
                         ),
                       );
                       break;

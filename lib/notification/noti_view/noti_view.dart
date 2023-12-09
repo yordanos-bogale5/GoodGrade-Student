@@ -54,7 +54,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 class NotiAdminDashboard extends StatelessWidget {
   final String adminUserId = 'admin_user_id_here';
 
-   NotiAdminDashboard({super.key}); // Replace with actual admin user ID
+   const NotiAdminDashboard({super.key}); // Replace with actual admin user ID
 
   @override
   Widget build(BuildContext context) {

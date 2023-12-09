@@ -9,6 +9,7 @@ const kLightColor = Color(0xFF808080);
 const kDarkColor = Color(0xFF303030);
 const kTransparent = Colors.transparent;
 
+
 const kDefaultPadding = 24.0;
 const kLessPadding = 10.0;
 const kFixPadding = 16.0;

@@ -136,6 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
+                      
                     ),
                   ),
                 ),
@@ -148,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Navigator.of(context).pop();
                       },
                       child: const Text(
-                        'Cancel',
+                        'Already have an account? Log In',
                         style: TextStyle(
                           color: Colors.blueGrey,
                           fontWeight: FontWeight.bold,

@@ -25,8 +25,17 @@ class _WishlistViewState extends State<WishlistView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Wishlist'),
-      ),
+          title: const Text('Wishliist'),
+            backgroundColor:Colors.blue[900],
+            foregroundColor:Colors.white,
+            elevation: 0,
+            leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color:Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+          ),
       body: ListView.builder(
         itemCount: wishlistItems.length,
         itemBuilder: (context, index) {

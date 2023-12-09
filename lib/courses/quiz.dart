@@ -103,8 +103,17 @@ class _QuizAppState extends State<QuizApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' Quiz '),
-      ),
+          title: const Text('Quiz '),
+            backgroundColor:Colors.blue[900],
+            foregroundColor:Colors.white,
+            elevation: 0,
+            leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color:Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+          ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
