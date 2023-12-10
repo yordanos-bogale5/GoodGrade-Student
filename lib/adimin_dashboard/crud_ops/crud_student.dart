@@ -3,28 +3,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class InstCrudOps extends StatefulWidget {
-  const InstCrudOps({Key? key}) : super(key: key);
+class StudentCrudOps extends StatefulWidget {
+  const StudentCrudOps({Key? key}) : super(key: key);
 
   @override
-  State<InstCrudOps> createState() => _MyWidgetState();
+  State<StudentCrudOps> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<InstCrudOps> {
+class _MyWidgetState extends State<StudentCrudOps> {
   // text field controller
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _fatherNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _saleryController = TextEditingController();
-  final TextEditingController _roleController = TextEditingController();
   final TextEditingController _numberController = TextEditingController();
   final TextEditingController _snController = TextEditingController();
   final TextEditingController _searchController = TextEditingController();
 
   final CollectionReference _items =
-      FirebaseFirestore.instance.collection('instructors');
+      FirebaseFirestore.instance.collection('Students');
 
   String searchText = '';
   // for create operation
@@ -47,7 +45,7 @@ class _MyWidgetState extends State<InstCrudOps> {
               children: [
                 const Center(
                   child: Text(
-                    "Add Instructor",
+                    "Add Student",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -87,20 +85,6 @@ class _MyWidgetState extends State<InstCrudOps> {
                   ),
                 ),
                 TextField(
-                  controller: _saleryController,
-                  decoration: const InputDecoration(
-                    labelText: 'Salery',
-                    hintText: 'eg.20000',
-                  ),
-                ),
-                TextField(
-                  controller: _roleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Role',
-                    hintText: 'eg.Biology',
-                  ),
-                ),
-                TextField(
                   keyboardType: TextInputType.number,
                   controller: _snController,
                   decoration: const InputDecoration(
@@ -127,8 +111,6 @@ class _MyWidgetState extends State<InstCrudOps> {
                       final String email = _emailController.text;
                       final String password = _passwordController.text;
                       final String address = _addressController.text;
-                      final String salery = _saleryController.text;
-                      final String role = _roleController.text;
                       final int? sn = int.tryParse(_snController.text);
                       final int? number = int.tryParse(_numberController.text);
 
@@ -139,8 +121,7 @@ class _MyWidgetState extends State<InstCrudOps> {
                           'email': email,
                           'password': password,
                           'address': address,
-                          'salery': salery,
-                          'role': role,
+                         
                           "number": number,
                           "sn": sn,
                         });
@@ -150,8 +131,7 @@ class _MyWidgetState extends State<InstCrudOps> {
                         _emailController.text = '';
                         _passwordController.text = '';
                         _addressController.text = '';
-                        _saleryController.text = '';
-                        _roleController.text = '';
+                        
                         _snController.text = '';
                         _numberController.text = '';
 
@@ -177,8 +157,6 @@ class _MyWidgetState extends State<InstCrudOps> {
       _emailController.text = documentSnapshot['email'];
       _passwordController.text = documentSnapshot['password'];
       _addressController.text = documentSnapshot['address'];
-      _saleryController.text = documentSnapshot['salery'];
-      _roleController.text = documentSnapshot['role'];
       _snController.text = documentSnapshot['sn'].toString();
       _numberController.text = documentSnapshot['number'].toString();
     }
@@ -241,20 +219,6 @@ class _MyWidgetState extends State<InstCrudOps> {
                   ),
                 ),
                 TextField(
-                  controller: _saleryController,
-                  decoration: const InputDecoration(
-                    labelText: 'Salery',
-                    hintText: 'eg.20000',
-                  ),
-                ),
-                TextField(
-                  controller: _roleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Role',
-                    hintText: 'eg.Biology',
-                  ),
-                ),
-                TextField(
                   keyboardType: TextInputType.number,
                   controller: _snController,
                   decoration: const InputDecoration(
@@ -280,8 +244,7 @@ class _MyWidgetState extends State<InstCrudOps> {
                     final String email = _emailController.text;
                     final String password = _passwordController.text;
                     final String address = _addressController.text;
-                    final String salery = _saleryController.text;
-                    final String role = _roleController.text;
+                   
                     final int? sn = int.tryParse(_snController.text);
                     final int? number = int.tryParse(_numberController.text);
 
@@ -294,8 +257,6 @@ class _MyWidgetState extends State<InstCrudOps> {
                             'email': email,
                             'password': password,
                             'address': address,
-                            'salery': salery,
-                            'role': role,
                             "number": number,
                             "sn": sn,
                           });
@@ -305,8 +266,7 @@ class _MyWidgetState extends State<InstCrudOps> {
                       _emailController.text = '';
                       _passwordController.text = '';
                       _addressController.text = '';
-                      _saleryController.text = '';
-                      _roleController.text = '';
+                    
                       _snController.text = '';
                       _numberController.text = '';
 
@@ -361,7 +321,7 @@ class _MyWidgetState extends State<InstCrudOps> {
                       hintText: 'Search..'),
                 ),
               )
-            : const Text('Instructor Management'),
+            : const Text('Student Management'),
         centerTitle: true,
         actions: [
           IconButton(

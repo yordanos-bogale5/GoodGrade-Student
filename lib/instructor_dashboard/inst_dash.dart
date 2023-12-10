@@ -28,15 +28,16 @@ class InstDashboard extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Instructor DashBoard'),
+          title: const Text('Instructor Dashboard'),
+            backgroundColor:Colors.blue[900],
+            foregroundColor:Colors.white,
+            elevation: 0,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                // Handle back button press
-                print('Back button pressed');
-                Navigator.pop(context); // Navigate back
-              },
-            ),
+          icon: const Icon(Icons.arrow_back, color:Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
           ),
           body: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

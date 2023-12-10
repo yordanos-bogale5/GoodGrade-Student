@@ -2,10 +2,11 @@
 
 import 'package:flutter/material.dart';
 
+import 'crud_ops/crud_student.dart';
 import 'crud_ops/ops.dart';
 import 'dashboard_screens/assignmentt.dart';
 
-import 'dashboard_screens/course_mgt.dart';
+
 
 import 'dashboard_screens/support.dart';
 import 'dashboard_screens/user.mgt.dart';
@@ -29,15 +30,16 @@ class AdminDashboard extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Adimin DashBoard'),
+          title: const Text('Admin Dashboard'),
+            backgroundColor:Colors.blue[900],
+            foregroundColor:Colors.white,
+            elevation: 0,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                // Handle back button press
-                print('Back button pressed');
-                Navigator.pop(context); // Navigate back
-              },
-            ),
+          icon: const Icon(Icons.arrow_back, color:Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
           ),
           body: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -74,7 +76,7 @@ class AdminDashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CourseMgt(),
+                          builder: (context) => const StudentCrudOps(),
                         ),
                       );
                       break;
