@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 
+import 'add_courses.dart';
 import 'crud_ops/crud_student.dart';
-import 'crud_ops/ops.dart';
+import 'crud_ops/crud_instructor.dart';
 import 'dashboard_screens/assignmentt.dart';
 
 
@@ -84,7 +85,7 @@ class AdminDashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const InstCrudOps(),
+                          builder: (context) => const AddCourses(),
                         ),
                       );
                       break;

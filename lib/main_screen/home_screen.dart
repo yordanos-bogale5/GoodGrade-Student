@@ -20,7 +20,7 @@ import '../adimin_dashboard/dashboard.dart';
 import '../common/color_extenstion.dart';
 import '../courses/course_dashbord.dart';
 
-import '../instructor_dashboard/inst_dash.dart';
+
 import '../menu_screen/contact_us.dart';
 import '../notification/noti_view/noti_view.dart';
 import '../view/cart.dart';
@@ -197,9 +197,7 @@ bool isLoading = true;
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NotificationScreen(
-                    userId: '',
-                  ),
+                  builder: (context) => NotificationScreen(),
                 ),
               );
             },
@@ -313,17 +311,6 @@ bool isLoading = true;
               },
             ),
             const Divider(),
-            ListTile(
-              leading: const Icon(Icons.account_circle),
-              title: const Text('inst dashboard'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const InstDashboard()),
-                );
-              },
-            ),
             ListTile(
               leading: const Icon(Icons.account_circle),
               title: const Text('admin dashboard'),

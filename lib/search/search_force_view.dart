@@ -21,10 +21,11 @@ class _SearchForceViewState extends State<SearchForceView> {
     "Search 5"
   ];
   List resultArr = [
-    "Gross Anatomy",
-    "When To Rob A Bank",
-    "The Bite In The Apple",
-    "The Ignorant Maestro"
+   'Digital signal processing',
+    'Mathematics',
+    'Graphic Design Fundamentals',
+    'Biology.',
+    'Intercultural communication and management'
   ];
 
   @override

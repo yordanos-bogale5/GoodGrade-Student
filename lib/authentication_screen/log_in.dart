@@ -2,7 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../adimin_dashboard/dashboard.dart';
 import '../courses/detail.dashboard.dart';
+
+import '../instructor_dashboard/inst_dash.dart';
 import 'custombtn.dart';
 import 'forget_password.dart';
 import 'google_sign_in.dart';
@@ -28,28 +32,92 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = true;
       });
 
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+      // Check if the user is an instructor
+      bool isInstructor = await checkIfInstructor(
+        emailController.text.trim(),
+        passwordController.text.trim(),
       );
-      User? user = userCredential.user;
 
-      if (user != null) {
+      // Check if the user is an admin
+      bool isAdmin = await checkIfAdmin(
+        emailController.text.trim(),
+        passwordController.text.trim(),
+      );
+
+      if (isInstructor) {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const DetailCourseScreen(),
+            builder: (context) => const InstDashboard(),
           ),
         );
+      } else if (isAdmin) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const AdminDashboard(),
+          ),
+        );
+      } else {
+        // If not an instructor or admin, attempt Firebase Authentication
+        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+
+        User? user = userCredential.user;
+
+        if (user != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DetailCourseScreen(),
+            ),
+          );
+        }
       }
     } catch (e) {
       print("Error logging in: $e");
+      // If you want to display an error message to the user, you can do so here.
     } finally {
       setState(() {
         isLoading = false;
       });
     }
   }
+
+  Future<bool> checkIfInstructor(String email, String password) async {
+    try {
+      // Check if the user exists in the 'instructors' collection in Firestore
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('instructors')
+          .where('email', isEqualTo: email)
+          .where('password', isEqualTo: password)
+          .get();
+
+      return snapshot.docs.isNotEmpty;
+    } catch (e) {
+      print("Error checking instructor: $e");
+      return false;
+    }
+  }
+
+Future<bool> checkIfAdmin(String email, String password) async {
+  try {
+    // Check if the user exists in the 'Admin' collection in Firestore
+    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+        .collection('Admin')
+        .where('email', isEqualTo: email)
+        .where('password', isEqualTo: password)
+        .get();
+
+    return snapshot.docs.isNotEmpty;
+  } catch (e) {
+    print("Error checking admin: $e");
+    return false;
+  }
+}
+
 
   bool isPasswordVisible = false;
   @override

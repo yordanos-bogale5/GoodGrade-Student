@@ -15,10 +15,18 @@ class SearchFilterView extends StatefulWidget {
 
 class _SearchFilterViewState extends State<SearchFilterView> {
   int selectSort = 0;
-  int selectGenre = 0;
+    bool priceShowMore = false;
+  int selectCategory = 0;
+   int selectPrice = 0;
+  int selectStatus = 0;
   int selectRate = 0;
-  bool genreShowMore = false;
-
+  bool categoryShowMore = false;
+  int selectGCategory = 0;
+  bool statusShowMore = false;
+  int selectLevel = 0;
+  bool levelShowMore = false;
+    int selectInstructor = 0;
+      bool instructorShowMore = false;
   List sortByArr = [
     "Featured Titles",
     "Price: Low to High",
@@ -26,17 +34,42 @@ class _SearchFilterViewState extends State<SearchFilterView> {
     "Publication Date",
     "A - Z"
   ];
-  List genreArr = [
-    "Biography",
-    "Business & Economics",
-    "Children",
-    "Cookery",
-    "Fiction",
-    "Biography1",
-    "Business & Economics1",
-    "Children1",
-    "Cookery1",
-    "Fiction1"
+  List categoryArr = [
+   'Photography',
+'Software training',
+'Environmental Sciences',
+'Material Design',
+'Music',
+'Art',
+'Mathematics',
+'Biology',
+'Marketing',
+'Computer Basics',
+'Electronic',
+'Digital signal processing'
+  ];
+   List levelArr = [
+'level',
+'Beginner',
+'Intermediate',
+'Advance'
+  ];
+    List statusArr = [
+'Featured',
+' Hot',
+'New',
+'Special'
+  ];
+      List instructorArr = [
+'Yordanos',
+'Seare',
+'Phina',
+'Dada',
+  ];
+        List priceArr = [
+'Free Courses',
+'Paid Courses',
+'Only Subscription',
   ];
 
   List ratingArr = [5.0, 4.0, 3.0, 2.0, 1.0];
@@ -130,23 +163,23 @@ class _SearchFilterViewState extends State<SearchFilterView> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: Text(
-                "Genre",
+                "Category",
                 style: TextStyle(color: TColor.subTitle, fontSize: 13),
               ),
             ),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              itemCount: genreShowMore
-                  ? genreArr.length
-                  : (genreArr.length > 5 ? 5 : genreArr.length),
+              itemCount: categoryShowMore
+                  ? categoryArr.length
+                  : (categoryArr.length > 5 ? 5 : categoryArr.length),
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                var itemName = genreArr[index] as String? ?? "";
+                var itemName = categoryArr[index] as String? ?? "";
                 return GestureDetector(
                   onTap: () {
                     setState(() {
-                      selectGenre = index;
+                      selectCategory = index;
                     });
                   },
                   child: Container(
@@ -155,10 +188,10 @@ class _SearchFilterViewState extends State<SearchFilterView> {
                     child: Row(
                       children: [
                         Icon(
-                            selectGenre == index
+                            selectCategory == index
                                 ? Icons.radio_button_checked
                                 : Icons.radio_button_off,
-                            color: selectGenre == index
+                            color: selectCategory == index
                                 ? TColor.primary
                                 : TColor.subTitle),
                         const SizedBox(
@@ -175,10 +208,60 @@ class _SearchFilterViewState extends State<SearchFilterView> {
                 );
               },
             ),
+
+              Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              child: Text(
+                "Status",
+                style: TextStyle(color: TColor.subTitle, fontSize: 13),
+              ),
+            ),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              itemCount: statusShowMore
+                  ? statusArr.length
+                  : (statusArr.length > 5 ? 5 : statusArr.length),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                var itemName = statusArr[index] as String? ?? "";
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectCategory = index;
+                    });
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+                    child: Row(
+                      children: [
+                        Icon(
+                            selectCategory == index
+                                ? Icons.radio_button_checked
+                                : Icons.radio_button_off,
+                            color: selectCategory == index
+                                ? TColor.primary
+                                : TColor.subTitle),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Expanded(
+                            child: Text(
+                          itemName,
+                          style: TextStyle(color: TColor.text, fontSize: 15),
+                        )),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+
             GestureDetector(
               onTap: () {
                 setState(() {
-                  genreShowMore = !genreShowMore;
+                  statusShowMore = !statusShowMore;
                 });
               },
               child: Container(
@@ -186,24 +269,100 @@ class _SearchFilterViewState extends State<SearchFilterView> {
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                 child: Row(
                   children: [
-                    Icon(genreShowMore ? Icons.expand_less : Icons.expand_more,
+                    Icon(categoryShowMore ? Icons.expand_less : Icons.expand_more,
                         color: TColor.subTitle),
                     const SizedBox(
                       width: 15,
                     ),
                     Expanded(
                         child: Text(
-                      genreShowMore ? "Hide" : "See more",
+                      categoryShowMore ? "Hide" : "See more",
                       style: TextStyle(color: TColor.subTitle, fontSize: 15),
                     )),
                   ],
                 ),
               ),
             ),
+
+    Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              child: Text(
+                "Level",
+                style: TextStyle(color: TColor.subTitle, fontSize: 13),
+              ),
+            ),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              itemCount: levelShowMore
+                  ? levelArr.length
+                  : (levelArr.length > 5 ? 5 : levelArr.length),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                var itemName = levelArr[index] as String? ?? "";
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectLevel = index;
+                    });
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+                    child: Row(
+                      children: [
+                        Icon(
+                            selectCategory == index
+                                ? Icons.radio_button_checked
+                                : Icons.radio_button_off,
+                            color: selectCategory == index
+                                ? TColor.primary
+                                : TColor.subTitle),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Expanded(
+                            child: Text(
+                          itemName,
+                          style: TextStyle(color: TColor.text, fontSize: 15),
+                        )),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  levelShowMore = !levelShowMore;
+                });
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                child: Row(
+                  children: [
+                    Icon(categoryShowMore ? Icons.expand_less : Icons.expand_more,
+                        color: TColor.subTitle),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                        child: Text(
+                      categoryShowMore ? "Hide" : "See more",
+                      style: TextStyle(color: TColor.subTitle, fontSize: 15),
+                    )),
+                  ],
+                ),
+              ),
+            ),
+
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               child: Text(
-                "Average Customer Review",
+                "Rating",
                 style: TextStyle(color: TColor.subTitle, fontSize: 13),
               ),
             ),
@@ -260,6 +419,156 @@ class _SearchFilterViewState extends State<SearchFilterView> {
                 );
               },
             ),
+    Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              child: Text(
+                "Instructors",
+                style: TextStyle(color: TColor.subTitle, fontSize: 13),
+              ),
+            ),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              itemCount: instructorShowMore
+                  ? instructorArr.length
+                  : (instructorArr.length > 5 ? 5 : levelArr.length),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                var itemName = instructorArr[index] as String? ?? "";
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectInstructor = index;
+                    });
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+                    child: Row(
+                      children: [
+                        Icon(
+                            selectCategory == index
+                                ? Icons.radio_button_checked
+                                : Icons.radio_button_off,
+                            color: selectCategory == index
+                                ? TColor.primary
+                                : TColor.subTitle),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Expanded(
+                            child: Text(
+                          itemName,
+                          style: TextStyle(color: TColor.text, fontSize: 15),
+                        )),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  instructorShowMore = !instructorShowMore;
+                });
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                child: Row(
+                  children: [
+                    Icon(categoryShowMore ? Icons.expand_less : Icons.expand_more,
+                        color: TColor.subTitle),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                        child: Text(
+                      categoryShowMore ? "Hide" : "See more",
+                      style: TextStyle(color: TColor.subTitle, fontSize: 15),
+                    )),
+                  ],
+                ),
+              ),
+            ),
+
+              Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              child: Text(
+                "Price",
+                style: TextStyle(color: TColor.subTitle, fontSize: 13),
+              ),
+            ),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              itemCount: priceShowMore
+                  ? priceArr.length
+                  : (priceArr.length > 5 ? 5 : priceArr.length),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                var itemName = priceArr[index] as String? ?? "";
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectPrice = index;
+                    });
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+                    child: Row(
+                      children: [
+                        Icon(
+                            selectCategory == index
+                                ? Icons.radio_button_checked
+                                : Icons.radio_button_off,
+                            color: selectCategory == index
+                                ? TColor.primary
+                                : TColor.subTitle),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Expanded(
+                            child: Text(
+                          itemName,
+                          style: TextStyle(color: TColor.text, fontSize: 15),
+                        )),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  priceShowMore = !priceShowMore;
+                });
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                child: Row(
+                  children: [
+                    Icon(categoryShowMore ? Icons.expand_less : Icons.expand_more,
+                        color: TColor.subTitle),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                        child: Text(
+                      categoryShowMore ? "Hide" : "See more",
+                      style: TextStyle(color: TColor.subTitle, fontSize: 15),
+                    )),
+                  ],
+                ),
+              ),
+            ),
+
             const SizedBox(
               height: 30,
             )
@@ -271,13 +580,13 @@ class _SearchFilterViewState extends State<SearchFilterView> {
           padding: const EdgeInsets.all(15),
           decoration: const BoxDecoration(color: Colors.white, boxShadow: [
             BoxShadow(
-              color: Colors.black26,
+              color: Colors.transparent,
               blurRadius: 3,
               offset: Offset(0, -3),
             ),
           ]),
           child: RoundButton(
-              title: "Apply",
+              title: "Show Results",
               onPressed: () {
                 Navigator.pop(context);
               }),
