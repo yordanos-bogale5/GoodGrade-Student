@@ -1,9 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class PushNotificationService {
@@ -88,13 +90,15 @@ Future<void> _showNotification(String title, String body) async {
 class MyApp extends StatelessWidget {
   static String notificationMessage = "No new notifications";
 
+  const MyApp({super.key});
+
   static void updateMessage(String message) {
     notificationMessage = message;
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Push Notifications',
       home: NotificationScreen(),
     );
@@ -102,7 +106,10 @@ class MyApp extends StatelessWidget {
 }
 
 class NotificationScreen extends StatefulWidget {
+  const NotificationScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _NotificationScreenState createState() => _NotificationScreenState();
 }
 
@@ -117,7 +124,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notification Screen"),
+        title: const Text("Notification Screen"),
       ),
       body: Center(
         child: Text(MyApp.notificationMessage),

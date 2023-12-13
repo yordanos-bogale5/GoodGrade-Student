@@ -8,18 +8,18 @@ import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 
 
-class Assignment extends StatefulWidget {
-  const Assignment({Key? key}) : super(key: key);
+class QuizCrud extends StatefulWidget {
+  const QuizCrud ({Key? key}) : super(key: key);
 
   @override
-  _AssignmentState createState() => _AssignmentState();
+  _QuizCrudState createState() => _QuizCrudState();
 }
 
-class _AssignmentState extends State<Assignment> {
+class _QuizCrudState extends State<QuizCrud > {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _numberController = TextEditingController();
 
-  final courseRef = FirebaseFirestore.instance.collection("Assignment");
+  final courseRef = FirebaseFirestore.instance.collection("Quiz");
 
   List<Map<String, dynamic>> localItems = [];
   String fileUrl = '';
@@ -72,19 +72,19 @@ var fileUrl = await (await uploadTask!).ref.getDownloadURL();
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Center(
-                child: Text("Add Assignment"),
+                child: Text("Add Quiz"),
               ),
               TextField(
                 controller: _nameController,
                 decoration: const InputDecoration(
-                  labelText: 'Assignment Name',
-                  hintText: 'eg Mathmatics Assignment',
+                  labelText: ' Quiz Name',
+                  hintText: 'eg Mathmatics  Quiz',
                 ),
               ),
               TextField(
                 controller: _numberController,
                 decoration: const InputDecoration(
-                  labelText: 'Assignment Id',
+                  labelText: ' Quiz Id',
                   hintText: 'eg 001',
                 ),
               ),
@@ -122,7 +122,7 @@ var fileUrl = await (await uploadTask!).ref.getDownloadURL();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Assignment'),
+        title: const Text('Add  Quiz'),
         backgroundColor: Colors.blue[900],
         foregroundColor: Colors.white,
         elevation: 0,
@@ -225,9 +225,7 @@ class PdfViewer extends StatelessWidget {
       appBar: AppBar(
         title: const Text('PDF Viewer'),
       ),
-      // body: PDFView(
-      //   filePath: pdfUrl,
-      // ),
+      body: Center()
     );
   }
 }

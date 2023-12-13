@@ -28,6 +28,7 @@ class _MyWidgetState extends State<InstCrudOps> {
 
   String searchText = '';
 
+  // ignore: unused_element
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
     await showModalBottomSheet(
       isScrollControlled: true,

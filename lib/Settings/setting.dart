@@ -1,4 +1,8 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
+
+import 'la_screen.dart';
 
 const kWhiteColor = Colors.white;
 const kDarkColor = Colors.black;
@@ -67,7 +71,10 @@ class _SettingState extends State<Setting> {
             onTap: () => setState(() {
               switch (settingLabel[index]) {
                 case 'Language':
-                  snackBarMsg(context, 'Language functionality');
+                Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LanguageScreen()),
+        );
                   break;
                 case 'Backup and Accout':
                   snackBarMsg(context, 'Backup and Account functionality');

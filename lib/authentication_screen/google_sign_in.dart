@@ -21,7 +21,9 @@ class GoogleFirebaseServices {
         await auth.signInWithCredential(authCredential);
       }
     } on FirebaseAuthException catch (e) {
+      // ignore: avoid_print
       print(e.message);
+      // ignore: use_rethrow_when_possible
       throw e;
     }
   }

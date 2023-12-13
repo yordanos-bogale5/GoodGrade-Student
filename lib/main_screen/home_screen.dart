@@ -16,7 +16,7 @@ import 'package:creavers_project/Settings/setting.dart';
 import 'package:creavers_project/main_screen/course_detail.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../adimin_dashboard/dashboard.dart';
+
 import '../common/color_extenstion.dart';
 import '../courses/course_dashbord.dart';
 
@@ -310,18 +310,7 @@ bool isLoading = true;
                 );
               },
             ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.account_circle),
-              title: const Text('admin dashboard'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const AdminDashboard()),
-                );
-              },
-            ),
+              const Divider(),
           ],
         ),
       ),

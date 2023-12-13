@@ -1,16 +1,11 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-
-import 'add_courses.dart';
+import 'crud_ops/add_courses.dart';
 import 'crud_ops/crud_student.dart';
 import 'crud_ops/crud_instructor.dart';
-import 'dashboard_screens/assignmentt.dart';
-
-
-
-import 'dashboard_screens/support.dart';
-import 'dashboard_screens/user.mgt.dart';
+import 'crud_ops/assignmentt.dart';
+import 'crud_ops/quiz_mgt.dart';
 
 void main() {
   runApp(const AdminDashboard());
@@ -54,8 +49,8 @@ class AdminDashboard extends StatelessWidget {
                 'Instructors',
                 'Students',
                 'Courses',
-                'Quiz',
                 'Assignment',
+                'Quiz',
                 'Answers',
               ];
 
@@ -93,27 +88,26 @@ class AdminDashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CommMgt(),
+                          builder: (context) => const Assignment(),
                         ),
                       );
                       break;
-                      case 6:
+                      case 4:
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const  HelpDesk(),
+                          builder: (context) => const  QuizCrud(),
                         ),
                       );
                       break;
-                      case 7:
+                      case 5:
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const UserMgt(),
+                          builder: (context) => const  QuizCrud(),
                         ),
                       );
                       break;
-                    // Add cases for other cards
                     default:
                       break;
                   }

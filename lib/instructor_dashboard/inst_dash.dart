@@ -9,6 +9,7 @@ import 'add_quiz.dart';
 
 
 
+
 void main() {
   runApp(const InstDashboard());
 }
@@ -50,7 +51,7 @@ class InstDashboard extends StatelessWidget {
               List<String> texts = [
                 'Add Courses ',
                 'Add Quiz',
-                'Add Quiz Answer',
+                'Add  Answer',
                 'Add Assignment',
               ];
 
@@ -64,7 +65,7 @@ class InstDashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const InstAddCourse(),
+                          builder: (context) => const AddCourses(),
                         ),
                       );
                       break;
@@ -88,7 +89,7 @@ class InstDashboard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const InstAddAssignment(),
+                          builder: (context) => const Assignment(),
                         ),
                       );
                       break;

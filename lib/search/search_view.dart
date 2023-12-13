@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'search_filter_view.dart';

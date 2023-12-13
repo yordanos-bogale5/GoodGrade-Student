@@ -1,15 +1,19 @@
+// ignore_for_file: unused_local_variable, use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+// ignore: unnecessary_import
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class AddCourses extends StatefulWidget {
   const AddCourses({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _AddCoursesState createState() => _AddCoursesState();
 }
 
@@ -17,44 +21,41 @@ class _AddCoursesState extends State<AddCourses> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _numberController = TextEditingController();
 
-  final CollectionReference _items = FirebaseFirestore.instance.collection("Add_Courses");
-
+  final courseRef = FirebaseFirestore.instance.collection("Courses");
+  // final CollectionReference _items = FirebaseFirestore.instance.collection("Add_Courses");
   List<Map<String, dynamic>> localItems = []; // List to store locally added items
-
   String fileUrl = '';
+  PlatformFile? pickedFile;
+  UploadTask? uploadTask;
 
-  Future<void> _pickAndUploadFile() async {
-    try {
-      final result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['pdf'],
-      );
 
-      if (result != null && result.files.isNotEmpty) {
-        File file = File(result.files.first.path!);
-        String fileName = DateTime.now().microsecondsSinceEpoch.toString();
+// A sectiom to upload a course file to firebase storage
 
-        Reference referenceRoot = FirebaseStorage.instance.ref();
-        Reference referenceDireFiles = referenceRoot.child('courses');
-        Reference referenceFileToUpload = referenceDireFiles.child(fileName);
-
-        await referenceFileToUpload.putFile(file);
-        fileUrl = await referenceFileToUpload.getDownloadURL();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("File uploaded successfully"),
-          ),
-        );
-      }
-    } on PlatformException catch (error) {
-      print("Error picking/uploading file: $error");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Error picking/uploading file"),
-        ),
-      );
-    }
+Future selectFile() async{
+  final result =  await  FilePicker.platform.pickFiles();
+  if(result == null){
+    return ;
   }
+  setState((){
+    pickedFile = result.files.first;
+  });
+
+  uploadFile();
+
+}
+
+Future uploadFile() async{
+  final path = "courses/${pickedFile!.name}";
+  final file = File(pickedFile!.path!);
+
+  final ref =  FirebaseStorage.instance.ref().child(path);
+  uploadTask =  ref.putFile(file);
+
+
+
+var fileUrl = await (await uploadTask!).ref.getDownloadURL();
+
+}
 
   Future<void> _create() async {
     await showModalBottomSheet(
@@ -73,62 +74,42 @@ class _AddCoursesState extends State<AddCourses> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Center(
-                child: Text("Create your Items"),
+                child: Text("Add Course"),
               ),
               TextField(
                 controller: _nameController,
                 decoration: const InputDecoration(
                   labelText: 'Name',
-                  hintText: 'eg Elon',
+                  hintText: 'eg Mathmatics',
                 ),
               ),
               TextField(
                 controller: _numberController,
                 decoration: const InputDecoration(
-                  labelText: 'Number',
-                  hintText: 'eg 10',
+                  labelText: 'Course Id',
+                  hintText: 'eg 001',
                 ),
               ),
-              const SizedBox(
+   const  SizedBox(
                 height: 10,
               ),
               Center(
                 child: IconButton(
-                  onPressed: _pickAndUploadFile,
+                  onPressed: selectFile,
                   icon: const Icon(Icons.add),
                 ),
               ),
               Center(
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (fileUrl.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Please select and upload the course"),
-                        ),
-                      );
-                      return;
-                    }
-                    final String name = _nameController.text;
-                    final int? number = int.tryParse(_numberController.text);
-                    if (number != null) {
-                      await _items.add({
-                        "name": name,
-                        "number": number,
-                        "file": fileUrl,
-                      });
-
-                      // Update the local list
-                      localItems.add({
-                        "name": name,
-                        "number": number,
+                  await courseRef.add({   "name": _nameController.text,
+                        "number": _nameController.text,
                         "file": fileUrl,
                       });
 
                       _nameController.text = '';
                       _numberController.text = '';
                       Navigator.of(context).pop();
-                    }
                   },
                   child: const Text('Create'),
                 ),
@@ -156,7 +137,7 @@ class _AddCoursesState extends State<AddCourses> {
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: _items.snapshots(),
+        stream: courseRef.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
           if (streamSnapshot.hasError) {
             return Center(
@@ -223,14 +204,9 @@ class PdfViewer extends StatelessWidget {
   const PdfViewer({Key? key, required this.pdfUrl}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('PDF Viewer'),
-      ),
-      body: PDFView(
-        filePath: pdfUrl,
-      ),
-    );
-  }
+Widget build(BuildContext context) {
+  return Scaffold(
+      body: SfPdfViewer.network(
+          'https://console.firebase.google.com/project/my-creavers-project-9ae09/database/my-creavers-project-9ae09-default-rtdb/data/~2F/content/PDFViewer/flutter-succinctly.pdf'));
+}
 }
