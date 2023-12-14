@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'la_screen.dart';
+
+import 'language.dart';
 
 const kWhiteColor = Colors.white;
 const kDarkColor = Colors.black;
@@ -73,7 +74,7 @@ class _SettingState extends State<Setting> {
                 case 'Language':
                 Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const LanguageScreen()),
+          MaterialPageRoute(builder: (context) =>  ChangeLanguageScreen(key: const Key("ChangeLanguageScreen"),)),
         );
                   break;
                 case 'Backup and Accout':

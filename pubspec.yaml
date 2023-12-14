@@ -68,6 +68,9 @@ dependencies:
   intl: ^0.18.1
   syncfusion_flutter_pdfviewer: ^23.2.7
   reactive_theme: ^2.1.0
+  flutter_localizations:
+    sdk: flutter
+
 
 dev_dependencies:
   flutter_test:

@@ -1,11 +1,11 @@
-// ignore_for_file: avoid_print
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:creavers_project/splash_screen/onboarding.dart';
 import 'package:creavers_project/constants/colors.dart';
-import 'package:reactive_theme/reactive_theme.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
@@ -13,63 +13,61 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  print (fcmToken);
-  // Get the saved theme mode here
-  final thememode = await ReactiveMode.getSavedThemeMode();
 
-  // Run the app
-  runApp(MyApp(savedThemeMode: thememode));
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  print(fcmToken);
+
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  final ThemeMode? savedThemeMode;
-
-  const MyApp({Key? key, required this.savedThemeMode}) : super(key: key);
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return ReactiveThemer(
-      // loads the saved thememode.
-      // If null, then ThemeMode.system is used
-      savedThemeMode: savedThemeMode,
-      builder: (reactiveMode) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        // Pass the reactiveMode to the themeMode parameter in order to toggle theme
-        themeMode: reactiveMode,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-          scaffoldBackgroundColor: AppColors.backgroundColor,
-          appBarTheme: const AppBarTheme(color: AppColors.backgroundColor),
-          primarySwatch: Colors.deepOrange,
-        ),
-        darkTheme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              brightness: Brightness.dark, seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const Onboarding(),
-      ),
-    );
+  _MyAppState createState() => _MyAppState();
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState state = context.findAncestorStateOfType<_MyAppState>()!;
+    state._changeLocale(newLocale);
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class _MyAppState extends State<MyApp> {
+  Locale _appLocale = const Locale('en');
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+  void _changeLocale(Locale newLocale) {
+    setState(() {
+      _appLocale = newLocale;
+    });
+  }
 
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    // Returns a boolean value
-  ReactiveMode.isDarkMode(context);
-    return Scaffold(
-      appBar: AppBar(),
-      body: const Center(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        scaffoldBackgroundColor: AppColors.backgroundColor,
+        appBarTheme: const AppBarTheme(color: AppColors.backgroundColor),
+        primarySwatch: Colors.deepOrange,
+      ),
+      locale: _appLocale,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        DefaultMaterialLocalizations.delegate,
+        DefaultWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'),
+        Locale('fr', 'FR'),
+      ],
+      home: Builder(
+        builder: (context) {
+          return const Onboarding();
+        },
+      ),
     );
   }
 }

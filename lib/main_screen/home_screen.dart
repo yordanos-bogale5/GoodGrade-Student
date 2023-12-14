@@ -310,7 +310,7 @@ bool isLoading = true;
                 );
               },
             ),
-              const Divider(),
+            
           ],
         ),
       ),

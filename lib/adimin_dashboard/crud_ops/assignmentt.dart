@@ -225,7 +225,7 @@ class PdfViewer extends StatelessWidget {
       appBar: AppBar(
         title: const Text('PDF Viewer'),
       ),
-      body: Center(),
+      body: const Center(),
     );
   }
 }
