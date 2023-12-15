@@ -10,9 +10,9 @@ class CartView extends StatefulWidget {
 
 class _CartViewState extends State<CartView> {
   List<String> cartItems = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
+    'Mathmatics',
+    'Physics',
+    'Biology'
   ];
 
   void removeItemFromCart(int index) {

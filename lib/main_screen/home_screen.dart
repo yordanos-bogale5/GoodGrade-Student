@@ -1,4 +1,5 @@
 import 'package:creavers_project/view/wish_list.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:creavers_project/main_screen/teacher_month.dart';
@@ -16,13 +17,16 @@ import 'package:creavers_project/Settings/setting.dart';
 import 'package:creavers_project/main_screen/course_detail.dart';
 import 'package:shimmer/shimmer.dart';
 
-
 import '../common/color_extenstion.dart';
 import '../courses/course_dashbord.dart';
 
-
 import '../menu_screen/contact_us.dart';
 import '../notification/noti_view/noti_view.dart';
+import '../staff/inst_one.dart';
+import '../staff/staff_five.dart';
+import '../staff/staff_four.dart';
+import '../staff/staff_three.dart';
+import '../staff/staff_two.dart';
 import '../view/cart.dart';
 import 'chat.dart';
 
@@ -41,7 +45,7 @@ class _HomePageState extends State<HomePage> {
 
   bool isDarkMode = false;
 
-bool isLoading = true;
+  bool isLoading = true;
 
   List<String> imgList = [
     'assets/Digital signal processing.webp',
@@ -131,13 +135,23 @@ bool isLoading = true;
   );
   bool isDark = false;
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  late User? _user;
+
   @override
   void initState() {
     super.initState();
+
     // Simulate data loading delay (you should replace this with actual data fetching logic)
     Future.delayed(const Duration(seconds: 3), () {
       setState(() {
         isLoading = false;
+      });
+    });
+
+    _auth.authStateChanges().listen((User? user) {
+      setState(() {
+        _user = user;
       });
     });
   }
@@ -180,7 +194,6 @@ bool isLoading = true;
         shadowColor: Colors.transparent,
         title: const Text(
           "Good Grade Student",
-          
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.w600,
@@ -197,7 +210,7 @@ bool isLoading = true;
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NotificationScreen(),
+                  builder: (context) => const NotificationScreen(),
                 ),
               );
             },
@@ -222,7 +235,6 @@ bool isLoading = true;
                 children: [
                   Image.asset('assets/good.jpg', height: 60),
                   const SizedBox(height: 10),
-                  // Add Switch for mode change
                   Padding(
                     padding: const EdgeInsets.only(top: 12, left: 218.0),
                     child: Switch(
@@ -258,7 +270,7 @@ bool isLoading = true;
                 );
               },
             ),
-             ListTile(
+            ListTile(
               leading: const Icon(Icons.shopping_cart),
               title: const Text('Cart'),
               onTap: () {
@@ -269,7 +281,7 @@ bool isLoading = true;
               },
             ),
             const Divider(),
-              ListTile(
+            ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('Setting'),
               onTap: () {
@@ -299,18 +311,24 @@ bool isLoading = true;
                 );
               },
             ),
-              const Divider(),
+            const Divider(),
             ListTile(
-              leading: const Icon(Icons.account_circle),
-              title: const Text('Log In'),
+              leading: _user == null
+                  ? const Icon(Icons.account_circle)
+                  : const Icon(Icons.exit_to_app),
+              title: Text(_user == null ? 'Log In' : 'Log Out'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
+                if (_user == null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                  );
+                } else {
+                  _auth.signOut();
+                }
               },
             ),
-            
           ],
         ),
       ),
@@ -337,10 +355,10 @@ bool isLoading = true;
                     Text(
                       "TOP COURSES",
                       style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 22,
-                  color: Color(0xFF808080),
-                  ),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 22,
+                        color: Color(0xFF808080),
+                      ),
                     ),
                   ],
                 ),
@@ -597,193 +615,243 @@ bool isLoading = true;
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: [
-                          Card(
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: SizedBox(
-                              width: 200,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image.asset(
-                                      'assets/staff.jpg',
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () {
+                              // Navigate to another screen here
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const InstOne()),
+                              );
+                            },
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: SizedBox(
+                                width: 200,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        'assets/staff.jpg',
+                                        width: 200,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  const Text(
-                                    'Yordanos Bogale',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Yordanos Bogale',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'Software Eniginer',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[700],
+                                    Text(
+                                      'Software Engineer',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[700],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                          Card(
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: SizedBox(
-                              width: 200,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image.asset(
-                                      'assets/wellcome.jpg',
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () {
+                              // Navigate to another screen here
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const InstTwo()),
+                              );
+                            },
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: SizedBox(
+                                width: 200,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        'assets/wellcome.jpg',
+                                        width: 200,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  const Text(
-                                    'Elfi Denizer',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Elfi Denizer',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'IT Expert',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[700],
+                                    Text(
+                                      'IT Expert',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[700],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                          Card(
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: SizedBox(
-                              width: 200,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image.asset(
-                                      'assets/teacher.jpg',
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () {
+                              // Navigate to another screen here
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const InstThree()),
+                              );
+                            },
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: SizedBox(
+                                width: 200,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        'assets/teacher.jpg',
+                                        width: 200,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  const Text(
-                                    'Cindy Chow',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Cindy Chow',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'Karate & Sambo',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[700],
+                                    Text(
+                                      'Karate & Sambo',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[700],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                          Card(
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: SizedBox(
-                              width: 200,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image.asset(
-                                      'assets/staff.jpg',
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () {
+                              // Navigate to another screen here
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const InstFour()),
+                              );
+                            },
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: SizedBox(
+                                width: 200,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        'assets/staff.jpg',
+                                        width: 200,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  const Text(
-                                    'Seare Hagos',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Seare Hagos',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'Painting',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[700],
+                                    Text(
+                                      'Painting',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[700],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                          Card(
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: SizedBox(
-                              width: 200,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image.asset(
-                                      'assets/teacher.jpg',
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () {
+                              // Navigate to another screen here
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const InstFive()),
+                              );
+                            },
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: SizedBox(
+                                width: 200,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        'assets/teacher.jpg',
+                                        width: 200,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  const Text(
-                                    'Sarah Johnson',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Sarah Johnson',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'Mobile Apps & Web',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[700],
+                                    Text(
+                                      'Mobile Apps & Web',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[700],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

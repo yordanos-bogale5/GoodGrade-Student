@@ -3,7 +3,7 @@ import 'package:creavers_project/Settings/languges.dart';
 import 'package:creavers_project/model/language_model.dart';
 
 class ChangeLanguageScreen extends StatefulWidget {
-  ChangeLanguageScreen({
+  const ChangeLanguageScreen({
     required Key key,
   }) : super(key: key);
 

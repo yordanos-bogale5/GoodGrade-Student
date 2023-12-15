@@ -172,18 +172,6 @@ var fileUrl = await (await uploadTask!).ref.getDownloadURL();
                           size: 40, color: Colors.red)
                       : const CircleAvatar(),
                 ),
-                onTap: () {
-                  if (thisItems.containsKey('file')) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PdfViewer(
-                          pdfUrl: thisItems['file'],
-                        ),
-                      ),
-                    );
-                  }
-                },
               );
             },
           );
@@ -201,7 +189,7 @@ var fileUrl = await (await uploadTask!).ref.getDownloadURL();
 class PdfViewer extends StatelessWidget {
   final String pdfUrl;
 
-  const PdfViewer({Key? key, required this.pdfUrl}) : super(key: key);
+  const PdfViewer(Set<dynamic> set, {Key? key, required this.pdfUrl}) : super(key: key);
 
   @override
 Widget build(BuildContext context) {
