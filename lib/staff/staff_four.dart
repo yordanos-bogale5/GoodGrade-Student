@@ -10,6 +10,7 @@ class InstFour extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+       debugShowCheckedModeBanner: false,
       title: 'Teacher Details',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -41,9 +42,18 @@ class InstFourDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Teacher Details'),
-      ),
+        appBar: AppBar(
+          title: const Text('Our Staffs'),
+            backgroundColor:Colors.blue[900],
+            foregroundColor:Colors.white,
+            elevation: 0,
+            leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color:Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+          ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

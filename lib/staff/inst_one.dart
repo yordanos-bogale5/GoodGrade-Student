@@ -1,115 +1,95 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const InstOne());
+  runApp(InstOne());
 }
 
 class InstOne extends StatelessWidget {
-  const InstOne({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Teacher Details',
+      title: 'Good Grade Student',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const InstOneDetailsPage(
-        teacherName: 'Yordanos Bogale',
-        teacherTitle: 'Software Engineer',
-        teacherDescription:
-            'Develops and designs curriculum plans to foster student learning, stimulate class discussions, and ensures student engagement.',
+      home: const InstructorDetailScreen(
+        instructorName: 'Yordanos Bogale',
         imagePath: 'assets/staff.jpg',
+        instructorDescription: 'Experienced instructor with expertise in...',
+        experience: '5 years', // Replace with actual experience data
+        rating: 4.5, // Replace with actual rating data
+        comments: 'Great instructor!', // Replace with actual comments data
       ),
     );
   }
 }
 
-class InstOneDetailsPage extends StatelessWidget {
-  final String teacherName;
-  final String teacherTitle;
-  final String teacherDescription;
+class InstructorDetailScreen extends StatelessWidget {
+  final String instructorName;
   final String imagePath;
+  final String instructorDescription;
+  final String experience;
+  final double rating;
+  final String comments;
 
-  const InstOneDetailsPage({super.key,
-    required this.teacherName,
-    required this.teacherTitle,
-    required this.teacherDescription,
+  const InstructorDetailScreen({
+    required this.instructorName,
     required this.imagePath,
+    required this.instructorDescription,
+    required this.experience,
+    required this.rating,
+    required this.comments,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Teacher Details'),
+        title: const Text('Instructor Detail'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Container(
-                  height: 550,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(imagePath),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 80,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black.withOpacity(0.7),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    teacherName,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
+            CircleAvatar(
+              radius: 80,
+              backgroundImage: AssetImage(imagePath),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10),
-                  Text(
-                    teacherTitle,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    teacherDescription,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[500],
-                    ),
-                  ),
-                ],
+            const SizedBox(height: 16),
+            Text(
+              instructorName,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              instructorDescription,
+              style: const TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Experience: $experience',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Rating: $rating',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Comments: $comments',
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),

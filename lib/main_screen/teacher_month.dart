@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const TeacherM());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class TeacherM extends StatelessWidget {
+  const TeacherM({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +41,18 @@ class TeacherDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Teacher Details'),
-      ),
+        appBar: AppBar(
+          title: const Text('Teachear Of The Month'),
+            backgroundColor:Colors.blue[900],
+            foregroundColor:Colors.white,
+            elevation: 0,
+            leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color:Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+          ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
